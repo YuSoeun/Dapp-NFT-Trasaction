@@ -530,7 +530,7 @@ const saleAnimalTokenAbi: AbiItem[] = [
 	}
 ];
 
-const mintAnimalTokenAddress = "0xcbfe284a8F54F4c05aeBdFb0C2141eB3e3390782";
+const mintAnimalTokenAddress = "0x63aBc299B8249512D5c2575Fb17C33F6f95f2D66";
 const saleAnimalTokenAddress = "0xB7E63b4AF4f588D167f3C4A92eA1E9feb56fde6A";
 
 export const web3 = new Web3(
