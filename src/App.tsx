@@ -2,11 +2,11 @@ import React, { FC, useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Main from "./routes/main";
-import { mintAnimalTokenContract } from "./";
+import { mintAnimalTokenContract } from "./web3Config";
 
 const App: FC = () => {
   const [account, setAccount] = useState<string>("");
-
+  
   const getAccount = async () => {
     try {
       if (window.ethereum) {
@@ -15,6 +15,8 @@ const App: FC = () => {
         });
 
         setAccount(accounts[0]);
+      } else {
+        alert("Install Metamask")
       }
     } catch (error) {
       console.error(error);
@@ -23,6 +25,7 @@ const App: FC = () => {
 
   useEffect(() => {
     getAccount();
+    console.log(account);
   }, [account]);
 
   return (

@@ -1,5 +1,6 @@
 import React, { FC, useState } from 'react';
 import { Box, Text, Flex, Button } from '@chakra-ui/react'
+import { mintAnimalTokenContract } from "../web3Config";
 
 interface MainProps {
   account: string;
@@ -12,9 +13,9 @@ const Main: FC<MainProps> = ({ account }) => {
     try {
       if (!account) return;
 
-      const response = await mintAnimalTokenContract.methods.mintAnimalToken().send();
-        .mintAnimalToken()
-        .send({from: account});
+      const response = await mintAnimalTokenContract
+      .methods.mintAnimalToken()
+      .send({from: account});
 
         console.log(response);
     } catch (error) {
