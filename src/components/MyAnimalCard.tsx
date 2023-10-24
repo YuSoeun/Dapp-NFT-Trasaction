@@ -1,6 +1,15 @@
-import React, { ChangeEvent, FC, useState } from 'react';
-import { saleAnimalTokenContract, web3 } from '../contracts';
-import AnimalCard from './AnimalCard';
+import {
+    Box,
+    Button,
+    Input,
+    InputGroup,
+    InputRightAddon,
+    Text,
+} from "@chakra-ui/react";
+import React, { ChangeEvent, FC, useState } from "react";
+import { saleAnimalTokenContract, web3 } from "../contracts";
+
+import AnimalCard from "./AnimalCard";
 
 export interface IMyAnimalCard {
     animalTokenId: string;
@@ -13,7 +22,13 @@ interface MyAnimalCardProps extends IMyAnimalCard {
     account: string;
 }
 
-const MyAnimalCard: FC<MyAnimalCardProps> = ({ animalType, animalTokenId, animalPrice, saleStatus, account }) => {
+const MyAnimalCard: FC<MyAnimalCardProps> = ({
+    animalTokenId,
+    animalType,
+    animalPrice,
+    saleStatus,
+    account,
+}) => {
     const [sellPrice, setSellPrice] = useState<string>("");
     const [myAnimalPrice, setMyAnimalPrice] = useState<string>(animalPrice);
 
@@ -25,30 +40,47 @@ const MyAnimalCard: FC<MyAnimalCardProps> = ({ animalType, animalTokenId, animal
         try {
             if (!account || !saleStatus) return;
 
-            const response = await saleAnimalTokenContract.methods.setForSaleAnimalToken(animalTokenId, web3.utils.toWei(sellPrice, "ether")).send({ from: account });
-            console.log(response)
+            const response = await saleAnimalTokenContract.methods
+                .setForSaleAnimalToken(
+                    animalTokenId,
+                    web3.utils.toWei(sellPrice, "ether")
+                )
+                .send({ from: account });
+
             if (response.status) {
                 setMyAnimalPrice(web3.utils.toWei(sellPrice, "ether"));
             }
         } catch (error) {
-            console.error('error')
+            console.error(error);
         }
     };
+
     return (
-        <div>
+        <Box textAlign="center" w={150}>
             <AnimalCard animalType={animalType} />
-            <div>
-                {myAnimalPrice === "0" ? <>
+            <Box mt={2}>
+                {myAnimalPrice === "0" ? (
                     <div>
-                        <input type="number" onChange={onChangeSellPrice} /><input type={'addon'} value={'Matic'} />
+                        <InputGroup>
+                            <Input
+                                type="number"
+                                value={sellPrice}
+                                onChange={onChangeSellPrice}
+                            />
+                            <InputRightAddon children="Matic" />
+                        </InputGroup>
+                        <Button size="sm" colorScheme="green" mt={2} onClick={onClickSell}>
+                            Sell
+                        </Button>
                     </div>
-                    <button onClick={onClickSell}>
-                        Sell
-                    </button>
-                </> : <p>{web3.utils.fromWei(myAnimalPrice)} Matic</p>}
-            </div>
-        </div>
+                ) : (
+                    <Text d="inline-block">
+                        {web3.utils.fromWei(myAnimalPrice)} Matic
+                    </Text>
+                )}
+            </Box>
+        </Box>
     );
-}
+};
 
 export default MyAnimalCard;

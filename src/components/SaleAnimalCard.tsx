@@ -1,3 +1,4 @@
+import { Box, Button, Text } from "@chakra-ui/react";
 import React, { FC, useEffect, useState } from 'react';
 import { mintAnimalTokenContract, saleAnimalTokenContract, web3 } from '../contracts';
 import AnimalCard from './AnimalCard';
@@ -8,46 +9,68 @@ interface SaleAnimalCardProps {
     animalTokenId: string;
     account: string;
     getOnSaleAnimalTokens: () => Promise<void>;
-}
-
-const SaleAnimalCard: FC<SaleAnimalCardProps> = ({ animalType, animalPrice, animalTokenId, account, getOnSaleAnimalTokens }) => {
-
+  }
+  
+  const SaleAnimalCard: FC<SaleAnimalCardProps> = ({
+    animalType,
+    animalPrice,
+    animalTokenId,
+    account,
+    getOnSaleAnimalTokens,
+  }) => {
     const [isBuyable, setIsBuyable] = useState<boolean>(false);
-
-    const getAnimalTokenOwner = async () => {
-        try {
-            const response = await mintAnimalTokenContract.methods.ownerOf(animalTokenId).call();
-            setIsBuyable(response.toLocaleLowerCase() === account.toLocaleLowerCase());
-        } catch (error) {
-            console.error(error)
-        }
-    }
-
+  
+    const getAnimalTokenOnwer = async () => {
+      try {
+        const response = await mintAnimalTokenContract.methods
+          .ownerOf(animalTokenId)
+          .call();
+  
+        setIsBuyable(
+          response.toLocaleLowerCase() === account.toLocaleLowerCase()
+        );
+      } catch (error) {
+        console.error(error);
+      }
+    };
+  
     const onClickBuy = async () => {
-        try {
-            if (!account) return;
-            const response = await saleAnimalTokenContract.methods.purchaseAnimalToken(animalTokenId).send({ from: account, value: animalPrice });
-
-            if (response.status) {
-                getOnSaleAnimalTokens();
-            }
-        } catch (error) {
-            console.error(error);
+      try {
+        if (!account) return;
+  
+        const response = await saleAnimalTokenContract.methods
+          .purchaseAnimalToken(animalTokenId)
+          .send({ from: account, value: animalPrice });
+  
+        if (response.status) {
+          getOnSaleAnimalTokens();
         }
-    }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+  
     useEffect(() => {
-        getAnimalTokenOwner();
+      getAnimalTokenOnwer();
     }, []);
-
-
-    return <div>
+  
+    return (
+      <Box textAlign="center" w={150}>
         <AnimalCard animalType={animalType} />
-        <div><p>
-            {web3.utils.fromWei(animalPrice)} Matic
-        </p>
-            <button onClick={onClickBuy} disabled={isBuyable}>Buy</button>
-        </div>
-    </div>;
-}
-
-export default SaleAnimalCard;
+        <Box>
+          <Text d="inline-block">{web3.utils.fromWei(animalPrice)} Matic</Text>
+          <Button
+            size="sm"
+            colorScheme="green"
+            m={2}
+            disabled={isBuyable}
+            onClick={onClickBuy}
+          >
+            Buy
+          </Button>
+        </Box>
+      </Box>
+    );
+  };
+  
+  export default SaleAnimalCard;

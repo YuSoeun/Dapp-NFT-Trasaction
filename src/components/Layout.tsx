@@ -1,31 +1,39 @@
 import React, { FC } from 'react';
-import { Stack } from '@chakra-ui/react';
-import { Link, Flex } from 'react-router-dom';
+import { Stack, Flex, Box, Text, Button } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 
 const Layout: FC = ({ children }) => {
-  return
-  <Stack h={100vh}>
-    <div>
-      <p>Doplin-Animals</p>
-    </div>
-    <Flex
-      direction = "column"
-      h="full"
-      justifyContent="center"
-      alignItems="center"
-    >
-      (childeren)
-      <Link to="/">
-        <button>Main</button>
-      </Link>
-      <Link to="/my-animal">
-        <button>My Animal</button>
-      </Link>
-      <Link to="/sale-animal">
-        <button>Sale Animal</button>
-      </Link>
-    </Flex>
-  </Stack>
+  return (
+    <Stack h="100vh">
+      <Flex
+        bg="purple.200"
+        p = {4}
+        justifyContent={'space-around'}
+        alignItems={'center'}>
+        <Box>
+          <Text fontWeight="bold">Doplin-Animals</Text>
+        </Box>
+
+        <Link to="/">
+          <Button size="sm" colorScheme="blue">Main</Button>
+        </Link>
+        <Link to="/my-animal">
+          <Button size="sm" colorScheme="red">My Animal</Button> 
+        </Link>
+        <Link to="/sale-animal">
+          <Button>Sale Animal</Button>
+        </Link>
+        </Flex>
+      <Flex
+        direction = "column"
+        h="full"
+        justifyContent="center"
+        alignItems="center"
+      >
+        {children}
+      </Flex>
+    </Stack>
+  );
 }
 
 export default Layout;
