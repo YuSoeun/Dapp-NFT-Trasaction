@@ -1,5 +1,5 @@
-# Created by https://www.toptal.com/developers/gitignore/api/solidity,visualstudiocode,remix,macos,windows,linux
-# Edit at https://www.toptal.com/developers/gitignore?templates=solidity,visualstudiocode,remix,macos,windows,linux
+# Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,windows,linux,macos,react,solidity
+# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,windows,linux,macos,react,solidity
 
 ### Linux ###
 *~
@@ -49,17 +49,24 @@ Temporary Items
 # iCloud generated files
 *.icloud
 
-### Remix ###
+### react ###
+.DS_*
+*.log
+logs
+**/*.backup.*
+**/*.back.*
+
 node_modules
-/.cache
-/build
-/public/build
-.env
+bower_components
+
+*.sublime*
+
+psd
+thumb
+sketch
 
 ### Solidity ###
 # Logs
-logs
-*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -89,7 +96,6 @@ coverage
 .grunt
 
 # Bower dependency directory (https://bower.io/)
-bower_components
 
 # node-waf configuration
 .lock-wscript
@@ -132,6 +138,7 @@ web_modules/
 .yarn-integrity
 
 # dotenv environment variable files
+.env
 .env.development.local
 .env.test.local
 .env.production.local
@@ -231,4 +238,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.toptal.com/developers/gitignore/api/solidity,visualstudiocode,remix,macos,windows,linux
+# End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,windows,linux,macos,react,solidity
